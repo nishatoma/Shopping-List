@@ -1,12 +1,19 @@
 import { Recipe } from './recipe.model';
 import { EventEmitter } from '@angular/core';
+import { Ingredient } from '../common/ingredient.model';
 
 export class RecipeService {
 
     // List of recipes
   private recipes: Recipe[] = [
-    new Recipe('Pizza', 'Delicio', 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg'),
-    new Recipe('Bizza', 'Digiorno', 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg')
+    new Recipe('Pizza',
+    'Delicio',
+    'https://upload.wikimedia.org/wikipedia/commons/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg',
+    [new Ingredient('toto', 3)]),
+    new Recipe('Bizza',
+    'Digiorno',
+    'https://upload.wikimedia.org/wikipedia/commons/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg',
+    [new Ingredient('jojo', 100)])
   ];
 
   getRecipes(): Recipe[] {
