@@ -30,5 +30,6 @@ export class ShoppingListService {
         // The spread operator ... allows to add 
         // an array as a list of elements.
         this.ingredients.push(...ingredients);
+        this.ingredientsChanged.emit(this.getIngredients());
     }
 }
