@@ -1,5 +1,5 @@
 import { Recipe } from './recipe.model';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Ingredient } from '../common/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
@@ -31,9 +31,6 @@ export class RecipeService {
     return copyRecipe;
   }
 
-  // Centralized emitter for when an item gets selected.
-  recipeSelected = new EventEmitter<Recipe>();
-
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shopService.addIngredients(ingredients);
   }
@@ -43,6 +40,4 @@ export class RecipeService {
       return this.getRecipes()[id];
     }
   }
-
-
 }
