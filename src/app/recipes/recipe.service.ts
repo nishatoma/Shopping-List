@@ -38,5 +38,11 @@ export class RecipeService {
     this.shopService.addIngredients(ingredients);
   }
 
+  getRecipeDetail(id: number) {
+    if (id >= 0 && id < this.getRecipes().length) {
+      return this.getRecipes()[id];
+    }
+  }
+
 
 }
