@@ -20,7 +20,7 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
-        this.id = +params['id'];
+        this.id = this.getCorrectId(+params['id']);
         this.detailedRecipe = this.recipeService.getRecipeDetail(this.id);
       }
     );
@@ -31,7 +31,21 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   editRecipe() {
-    this.router.navigate(['edit'], {relativeTo: this.route});
+    this.router.navigate(['../', this.getCorrectId(this.id),'edit'], {relativeTo: this.route});
+  }
+
+  deleteRecipe() {
+    this.recipeService.deleteRecipe(this.id);
+    this.router.navigate(['/recipes']);
+  }
+
+  getCorrectId(id: number) {
+    if (id > this.recipeService.getRecipes().length - 1) {
+      id = this.recipeService.getRecipes().length - 1;
+    } else if (id < 0) {
+      id = 0;
+    }
+    return id;
   }
 
 }

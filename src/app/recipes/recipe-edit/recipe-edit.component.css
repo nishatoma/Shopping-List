@@ -1,0 +1,28 @@
+input {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}
+
+button {
+    margin-top: 0.3em;
+    margin-right: 0.3em;
+    margin-bottom: 0.3em;
+}
+
+#delete {
+    width: 100%;
+    
+}
+
+textarea {
+    margin-bottom: 0.3em;
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+img {
+    margin-bottom: 0.6em;
+}

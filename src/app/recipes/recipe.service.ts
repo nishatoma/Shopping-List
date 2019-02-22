@@ -2,6 +2,7 @@ import { Recipe } from './recipe.model';
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../common/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
+import { Subscriber, Subject } from 'rxjs';
 
 @Injectable()
 export class RecipeService {
@@ -19,6 +20,8 @@ export class RecipeService {
     'https://upload.wikimedia.org/wikipedia/commons/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg',
     [new Ingredient('jojo', 100)])
   ];
+
+  recipeChanges: Subject<any> = new Subject<any>();
 
   getRecipes(): Recipe[] {
     // Create a copy array for return
@@ -39,5 +42,22 @@ export class RecipeService {
     if (id >= 0 && id < this.getRecipes().length) {
       return this.getRecipes()[id];
     }
+  }
+
+  addRecipe(recipe: Recipe) {
+    if (recipe) {
+      this.recipes.push(recipe);
+    }
+    this.recipeChanges.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipeChanges.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipeChanges.next(this.recipes.slice());
   }
 }
