@@ -23,15 +23,14 @@ export class RecipeService {
 
   recipeChanges: Subject<any> = new Subject<any>();
 
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipeChanges.next(this.getRecipes());
+  }
+
   getRecipes(): Recipe[] {
     // Create a copy array for return
-    let copyRecipe: Recipe[] = [];
-    // Iterate through the original array
-    // and copy each element to the copy array.
-    this.recipes.forEach((recipe) => {
-        copyRecipe.push(recipe);
-    })
-    return copyRecipe;
+    return this.recipes.slice();
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
@@ -53,11 +52,11 @@ export class RecipeService {
 
   updateRecipe(index: number, newRecipe: Recipe) {
     this.recipes[index] = newRecipe;
-    this.recipeChanges.next(this.recipes.slice());
+    this.recipeChanges.next(this.getRecipes());
   }
 
   deleteRecipe(index: number) {
     this.recipes.splice(index, 1);
-    this.recipeChanges.next(this.recipes.slice());
+    this.recipeChanges.next(this.getRecipes());
   }
 }
