@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
-import { map } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable()
@@ -12,7 +13,7 @@ export class DataStorageService {
     static readonly recipesJson = 'recipes.json';
     static readonly queryToken = '?auth='
 
-    constructor (private httpService: Http,
+    constructor (private httpService: HttpClient,
         private recipeService: RecipeService,
         private authService: AuthService) {}
 
@@ -23,11 +24,11 @@ export class DataStorageService {
 
     getRecipes() {
         const token = this.authService.getToken()
-            
-        this.httpService.get(DataStorageService.URL + DataStorageService.queryToken + token).pipe(
+        // With the http client, we can tell the get method what kind of response we want.
+        // In this case we assume we got Recipe array.
+        this.httpService.get<Recipe[]>(DataStorageService.URL + DataStorageService.queryToken + token).pipe(
             map(
-                (response: Response) => {
-                    const recipes: Recipe[] = response.json();
+                (recipes) => {
                     recipes.forEach((recipe) => {
                         if (!recipe.ingredients) {
                             recipe.ingredients = [];
@@ -43,5 +44,4 @@ export class DataStorageService {
             }
           );;
     }
-
 }
